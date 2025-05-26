@@ -2,8 +2,9 @@
 
 
 
-percentile <- function(x, method = c("brute", "rank"))
+percentile <- function(x, method = c("rank", "brute"), nsmall = 10)
 {
+    method <- match.arg(method)
     if (!is.numeric(x)) stop("Input scores must be numeric")
     if (anyNA(x)) stop("Missing scores are not allowed")
     N <- length(x)
@@ -18,7 +19,10 @@ percentile <- function(x, method = c("brute", "rank"))
                 brute = sapply(x, countLess),
                 rank = rank(x, ties.method = "max"))
 
-    list(D = D, N = N, P = D / N)
+    data.frame(id = names(x), raw = x,
+               percentile = D / N,
+               pchar = format(D / N, nsmall = nsmall),
+               D = D, N = N)
 }
 
 if (FALSE)
