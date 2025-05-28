@@ -2,7 +2,7 @@
 
 
 
-percentile <- function(x, method = c("rank", "brute"), nsmall = 10)
+percentile <- function(x, method = c("rank", "brute"), nsmall = 12)
 {
     method <- match.arg(method)
     if (!is.numeric(x)) stop("Input scores must be numeric")
@@ -21,7 +21,7 @@ percentile <- function(x, method = c("rank", "brute"), nsmall = 10)
 
     data.frame(id = names(x), raw = x,
                percentile = D / N,
-               pchar = format(D / N, nsmall = nsmall),
+               pchar = format(D / N, nsmall = nsmall, scientific = FALSE),
                D = D, N = N)
 }
 
